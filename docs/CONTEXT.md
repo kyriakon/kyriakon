@@ -9,7 +9,7 @@ outside one repo) live in that repo's own `CONTEXT.md` instead — e.g.
 
 **Shell-less user**:
 The standard account tier across the whole platform. No interactive shell. Mail via
-IMAP/SMTP, static/Gemini site hosting via `ftpd` upload, `pass` git repos via
+IMAP/SMTP, static/Gemini site hosting via `sftp` upload, `pass` git repos via
 `git-shell`. This is the platform's core safety property — it's what keeps support
 burden, resource contention, and moderation load bounded without needing pubnix-style
 shell moderation tooling.
