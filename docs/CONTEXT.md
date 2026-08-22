@@ -44,3 +44,17 @@ published publicly on GitHub rather than asserted as trustworthy. Shorthand used
 throughout the proposal and docs for "verifiable, not just claimed."
 _Avoid_: transparency (too generic — this term refers specifically to the
 publish-the-config practice, not transparency in general)
+
+**Zero-access mail**:
+Mail whose stored form the platform cannot decrypt: it holds only the user's public key
+and encrypts on ingress, so a disclosure order yields ciphertext and no key. Protects
+message content (subject, body, headers), not correspondence metadata — the stronger
+property than `encrypted at rest`, where an admin can still decrypt.
+_Avoid_: zero-knowledge mail (overstates — the server still sees the envelope and
+in-flight plaintext)
+
+**Recovery phrase**:
+The user-held, passphrase-protected offline backup of a mail private key — the only path
+back from a lost device or key. Never held by the platform; losing both key and phrase is
+permanent mail loss.
+_Avoid_: password reset, reset phrase
