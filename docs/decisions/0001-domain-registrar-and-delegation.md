@@ -11,7 +11,7 @@ Hurricane Electric's free secondary answering public queries, so the registry de
 in the DNS path: its secondary DNS and partial-setup products are priced for enterprises, and the
 zone should be git-auditable in `kyriakon-infra` rather than living in a third-party dashboard.
 
-The domain is registered with Cloudflare Registrar. At the registry:
+The domain is registered with Cloudflare Registrar. At the registry, before the transfer:
 
 ```
 registrar:    Cloudflare, Inc.
@@ -63,8 +63,11 @@ for 60 days after a registrant change.
 
 DNSSEC is off today. If HE ever signs the zone, the DS records have to be published at Porkbun.
 
-The transfer is a manual step rather than an automated one: unlock at Cloudflare, take the auth
-code, start the transfer at Porkbun, approve it, then set the five nameservers.
+The transfer completed on 2026-09-11. The registry now shows registrar Porkbun LLC, nameservers
+`NS1.HE.NET` through `NS5.HE.NET`, status `client delete prohibited` and `client transfer
+prohibited`, and expiry 2029-11-17 after the year a transfer adds. Public resolvers return HE's five
+nameservers, and the zone answers through them: SOA serial `2026082701`, `10 mail.kyriakon.net.`,
+the box's IPv4 and IPv6 for the apex, `mail` and the wildcard, SPF, the DKIM placeholder, and DMARC.
 
 ## References
 
