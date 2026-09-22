@@ -49,8 +49,15 @@ Porkbun permits arbitrary external nameservers, supports WebAuthn and U2F hardwa
 passkeys for account login, prices transfers and renewals flat with free WHOIS privacy, and
 publishes an API if the delegation ever needs scripting.
 
-Both domains consolidate at Porkbun. `kyriakon.com` stays at Dynadot until its transfer lock lifts,
-and moves once it does.
+Both domains consolidate at Porkbun. `kyriakon.com` was registered at Dynadot on 2026-09-17, so it
+sits inside ICANN's 60-day post-registration transfer prohibition, which lifts around 2026-11-16. It
+moves after that.
+
+The transfer is not automatic and needs three things done deliberately: the `client transfer
+prohibited` status removed, an auth code obtained from Dynadot, and the authorisation email actioned
+by the registrant contact. The last is the quiet failure mode of a planned transfer, and it cannot be
+checked from outside the account: registry RDAP redacts registrant contacts and exposes only the
+registrar handle.
 
 That consolidation is provisional rather than settled. `kyriakon-infra` issue #70 is scoping
 resistance to a state-level adversary as a product property, and one of its open questions is
