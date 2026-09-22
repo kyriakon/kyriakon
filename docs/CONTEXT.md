@@ -58,3 +58,21 @@ The user-held, passphrase-protected offline backup of a mail private key — the
 back from a lost device or key. Never held by the platform; losing both key and phrase is
 permanent mail loss.
 _Avoid_: password reset, reset phrase
+
+**Operator**:
+The person who runs the platform: provisioning, approving applications, and answering mail
+sent to the addresses the domain publishes. Today this is Oliver alone.
+_Avoid_: admin (that is the `admin@` address and its folder, not the role), owner, sysadmin,
+and the bare word for a third party that operates infrastructure — qualify those, as
+`threat-model.md` already does with "registry operator"
+
+**Operator host**:
+The always-on machine the operator runs for his own work, distinct from the mail box. It
+holds his own mail private key, which makes it the only machine where message content is
+processed. See ADR 0002.
+_Avoid_: client (already means the PGP-capable mail application), personal machine, laptop
+
+**Triage model**:
+The local model on the operator host that sorts inbound mail and account applications into
+folders and priority. It sorts only: it never sends, deletes, or approves anything.
+_Avoid_: classifier, decision model, System One model, Jev
