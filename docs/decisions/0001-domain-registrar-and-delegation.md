@@ -1,7 +1,9 @@
-# 0001 Domain registrar and delegation for kyriakon.net
+# 0001 Domain registrar and delegation
 
 Status: accepted
 Date: 2026-09-11
+Amended: 2026-09-22, extended to cover `kyriakon.com`, with the consolidation marked provisional
+pending `kyriakon-infra` issue #70
 
 ## Context
 
@@ -31,6 +33,12 @@ registry delegation, so it cannot move authority. Terraform adds nothing either:
 Porkbun provider exists, and the community providers carry a `destroy` that deletes a registration,
 in exchange for managing a value that changes once.
 
+A second domain is in scope for the same reason. `kyriakon.com` is a defensive registration: it
+exists so that nobody else can use the name, not to serve anything. It is delegated to Hurricane
+Electric like the primary, it answers a blanket denial record set, and the box redirects it to
+`kyriakon.net`. That infrastructure is already live, which is why the registrar question applies to
+it now rather than being a future concern.
+
 ## Decision
 
 Transfer `kyriakon.net` out of Cloudflare Registrar to Porkbun, and set the registry nameservers to
@@ -40,6 +48,15 @@ zone stays in `openbsd/etc/nsd/` in `kyriakon-infra`, served by the box and by H
 Porkbun permits arbitrary external nameservers, supports WebAuthn and U2F hardware keys as well as
 passkeys for account login, prices transfers and renewals flat with free WHOIS privacy, and
 publishes an API if the delegation ever needs scripting.
+
+Both domains consolidate at Porkbun. `kyriakon.com` stays at Dynadot until its transfer lock lifts,
+and moves once it does.
+
+That consolidation is provisional rather than settled. `kyriakon-infra` issue #70 is scoping
+resistance to a state-level adversary as a product property, and one of its open questions is
+whether jurisdiction diversity across registrars and registries is warranted. If it concludes that
+it is, that conclusion supersedes this paragraph, and INWX remains the EU-jurisdiction alternative
+named above.
 
 Alternatives and why they lost. INWX is equally capable and remains the alternative if EU
 jurisdiction is wanted later. Hetzner's documented DNS configurations all include Hetzner
@@ -69,6 +86,21 @@ prohibited`, and expiry 2029-11-17 after the year a transfer adds. Public resolv
 nameservers, and the zone answers through them: SOA serial `2026082701`, `10 mail.kyriakon.net.`,
 the box's IPv4 and IPv6 for the apex, `mail` and the wildcard, SPF, the DKIM placeholder, and DMARC.
 
+`kyriakon.com` is delegated to HE on the same five nameservers and is answering publicly: a null MX
+at both the apex and the wildcard per RFC 7505, `v=spf1 -all` at both, empty-key DKIM denial for any
+selector, and the apex pointing at the box so the redirect and its certificate work. The wildcards
+are the point. A forger can choose any name under a domain, not just the apex, so a per-name denial
+would leave the rest of the namespace open.
+
+Its registry state differs in one respect worth closing. It is at Dynadot3804 LLC, expires
+2027-09-17, and carries `client transfer prohibited` but not `client delete prohibited`, where
+`kyriakon.net` carries both. For the one domain whose entire purpose is that nobody else can use the
+name, an accidental deletion is the failure that defeats the purpose. Either Dynadot adds the status
+or the transfer does, and that should be confirmed rather than assumed.
+
+Neither lock is what actually keeps a defensive domain. Auto-renew against a reachable registrant
+contact is, and `kyriakon.com` expires two years before `kyriakon.net` does.
+
 ## References
 
 - Proposal sections 5.7 and 6.13, in `docs/decisions/kyriakon-net-project-proposal.md`
@@ -76,6 +108,20 @@ the box's IPv4 and IPv6 for the apex, `mail` and the wildcard, SPF, the DKIM pla
 - [Cloudflare DNS: nameservers](https://developers.cloudflare.com/dns/nameservers/)
 - [Porkbun: transfer a domain in](https://kb.porkbun.com/article/56-how-to-transfer-a-domain-to-porkbun) and [nameserver import behaviour](https://kb.porkbun.com/article/117-will-my-nameservers-be-imported-during-a-transfer)
 - `kyriakon-infra` issue #24 and pull request #52
+- `kyriakon-infra` issue #70, scoping resistance to a state-level adversary, which governs whether
+  registrar diversity supersedes the consolidation above
+- `kyriakon-infra` `openbsd/etc/nsd/kyriakon.com.zone`, `nsd.conf`, `acme-client.conf`,
+  `httpd.conf` and `scripts/deploy-nsd.sh`, where the defensive registration is implemented
+
+Registry and delegation state for both domains was regenerated with:
+
+```sh
+for d in kyriakon.net kyriakon.com; do
+  curl -fsS -H 'Accept: application/rdap+json' \
+    "https://rdap.verisign.com/${d##*.}/v1/domain/$d" | jq -rc '.status'
+done
+dig +short NS kyriakon.com @8.8.8.8
+```
 
 Registry state in this record was regenerated with:
 
