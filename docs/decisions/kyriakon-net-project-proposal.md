@@ -30,7 +30,7 @@ At the caps on that invoice the steady state is: primary `cx23` €47.88/yr, res
 
 The fixed cost is therefore near £160/yr and break-even is about nine paying users on this section's method, not the ≈ 6 recorded. The £20/yr price and the method are unchanged, and ADR 0006's revenue gate of ten sits one member above that break-even.
 
-The restore box is the line to attack rather than accept. At €5.49 per month it is 35 per cent of the fixed cost, while the 97 hours it actually used on this invoice billed €0.85, and Hetzner bills hourly for a server deleted before the month is out. A box created for each run and destroyed afterwards would take the fixed cost to roughly £104/yr and break-even back to about six. Whether the weekly test keeps a standing box is a decision rather than a requirement, tracked in `kyriakon-infra` #111.
+The restore box is the line that does not need to exist. At €5.49 per month it is 35 per cent of the fixed cost, while the 97 hours it actually used on this invoice billed €0.85, and Hetzner bills hourly for a server deleted before the month is out. `scripts/restore-standup.sh` stands a box up for the minutes the weekly test takes and deletes it again, which removes €71.88/yr across the instance and its address and takes the fixed cost to about £100/yr and break-even to about six, leaving ADR 0006's gate of ten with margin. It lands in `kyriakon-infra` PR #115, and the migration steps are in `kyriakon-infra` #111.
 
 ## 3. Naming & Identity
 
