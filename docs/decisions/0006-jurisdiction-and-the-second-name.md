@@ -17,7 +17,7 @@ Switzerland, `.ch`, costs about £12 a year, and SWITCH is the registry, so the 
 
 Hold `kyriakon.net` and `kyriakon.com` where they are, and move neither.
 
-Acquire `.ch` defensively, as a second name, when paying members reach eight. That is a gate rather than a date, and it exists because the resolved cost model in the proposal's section 2, roughly £113 a year fixed across one VPS, one storage box and one domain, no longer describes the deployment: there are two boxes, and there will be two domains, with the restore machine absent from that figure entirely.
+Acquire `.ch` defensively, as a second name, when paying members reach ten. That is a gate rather than a date. The resolved cost model in the proposal's section 2 recorded roughly £113 a year fixed across one VPS, one storage box and one domain, and the September 2026 invoice shows €128.49 a year across two instances, two IPv4 addresses and the repository snapshots, or about £110 at the ECB reference rate of 2026-09-22, before the storage box and two domain renewals. The fixed cost is therefore near £160 a year and break-even is about nine paying users rather than six, so the gate sits one member above break-even.
 
 The registrar must be outside the European Union, and because SWITCH is the only route to `.ch` that means Swiss. The candidates are INWX, if the contracting entity is the Zürich one rather than the `inwx.de` presence or the "INWX Inc." the site also names, and Infomaniak in Geneva. Both need confirming as permitting arbitrary external nameservers, because the delegation has to reach HE.
 
