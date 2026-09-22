@@ -76,3 +76,18 @@ _Avoid_: client (already means the PGP-capable mail application), personal machi
 The local model on the operator host that sorts inbound mail and account applications into
 folders and priority. It sorts only: it never sends, deletes, or approves anything.
 _Avoid_: classifier, decision model, System One model, Jev
+
+**Reading adversary**:
+An authority that wants the content of mail: the wiretap, the disclosure order, the compelled
+operator. Defended against cryptographically, by the platform holding no ability to decrypt, so it
+is the one threat class where the defence is verifiable by inspection.
+_Avoid_: state actor (ambiguous, see "suppression adversary"), government threat actor, nation-level
+threat actor
+
+**Suppression adversary**:
+An authority that wants the platform gone, unreachable, or its operators silenced, rather than
+wanting to read a particular mailbox. It attacks choke points rather than content, so cryptography
+does not answer it and jurisdiction diversity is what does. Physical coercion of the operator stays
+out of scope for both classes.
+_Avoid_: state actor (ambiguous, see "reading adversary"), surveillance (that is the reading case),
+censorship (names the mechanism, not the actor)
