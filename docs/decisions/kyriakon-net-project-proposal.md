@@ -251,7 +251,11 @@ mail that is already PGP ciphertext alongside the box's own DKIM and queue keys.
 snapshot, a whole disk image whose contents are protected by the box's softraid passphrase.
 Neither is usable without a passphrase the custodian never receives, and the softraid passphrase
 cascades because it unlocks the disk holding `/root/.restic-pass`, so it is one secret guarding
-both and the single thing that must never travel with either blob.
+both and the single thing that must never travel with either blob. That is the opposite of the
+offline SSD copy, whose passphrase ADR 0007 stores with the copy, because that disk already holds
+the operator's keys and one more secret changes nothing about the exposure. A custodian's copy
+carries no passphrase at all, which is what makes an untrusted custodian acceptable where an
+untrusted disk would not be.
 
 The copy is pruned to the last seven weekly snapshots with `restic forget --keep-last`, so no
 custodian accumulates a long archive and a leaked restic password opens months rather than years.
