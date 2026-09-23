@@ -244,6 +244,42 @@ Rather than one big "make it redundant" decision, this is better treated as laye
 4. **Warm-standby VPS (Phase 4+, cost-gated)** — a second Hetzner instance, built from the same snapshot as §6.1, kept stopped (Hetzner charges primarily for storage on a stopped instance, not compute) and ready to be started and pointed at DNS/MX manually if the primary is lost outright. This is a natural extension of the snapshot-based provisioning already planned, not a separate architecture — but it roughly doubles the storage cost, so it's worth deferring until real user volume justifies it rather than paying for it against an empty platform.
 5. **Splitting mail/web/git across separate boxes (explicitly not recommended at this stage)** — would limit blast radius per outage, but directly undercuts the "one modest VPS serves hundreds of low-traffic accounts" economics from the original break-even reasoning, for a benefit (partial rather than total outage) that matters far less than actual redundancy (layers 3–4) at this user count. Worth revisiting only if the platform outgrows a single box on resource grounds, not as a resilience measure in its own right.
 
+**Off-site copy and custodian (deferred, and the prerequisite for layers 3 and 4).** Layers 3 and
+4 both live in the same Hetzner account, which is the concentration this section already names
+against itself. Two additions fix that without building either layer, and one of them has to exist
+first: a total Hetzner loss takes the primary and the nightly repository on the storage box
+together, leaving only the quarterly SSD copy, so the prerequisite is a copy of the repository
+outside Hetzner at a cadence better than quarterly.
+
+The copy lives with a **custodian**: a body rather than an individual, chosen for continuity and a
+proven ability to act, so an archdiocese or a monastery with a stable connection rather than a
+parish council, and never a named volunteer whose interest or lease can lapse. The custodian holds
+two things and no key. The first is the restic repository, ciphertext as a file, containing member
+mail that is already PGP ciphertext alongside the box's own DKIM and queue keys. The second is a
+snapshot, a whole disk image whose contents are protected by the box's softraid passphrase.
+Neither is usable without a passphrase the custodian never receives, and the softraid passphrase
+cascades because it unlocks the disk holding `/root/.restic-pass`, so it is one secret guarding
+both and the single thing that must never travel with either blob. That is the opposite of the
+offline SSD copy, whose passphrase ADR 0007 stores with the copy, because that disk already holds
+the operator's keys and one more secret changes nothing about the exposure. A custodian's copy
+carries no passphrase at all, which is what makes an untrusted custodian acceptable where an
+untrusted disk would not be.
+
+The copy is pruned to the last seven weekly snapshots with `restic forget --keep-last`, so no
+custodian accumulates a long archive and a leaked restic password opens months rather than years.
+It is proven the way the repository is proven: the monthly restore read is taken from the
+custodian's copy rather than from the storage box, so the copy is known to restore rather than
+assumed to. A second provider holding the same copy, with no human relationship attached, is the
+fallback if no custodian appears.
+
+All of it is deferred and bought the way the other layers are, by the surplus rule: a line is
+affordable when surplus covers it, counted as members equal to its annual cost divided by the
+contribution margin, which at £19.50 per member puts an off-site copy two or three members beyond
+break-even. Cold rebuild comes before layer 3's queuing relay and layer 4's warm standby, because
+a standby built on a stale repository is not a recovery plan. Widening membership beyond Orthodox,
+if substantial non-Orthodox interest appears or a supporting body requires it, would also widen
+who can be a custodian, since a body holding ciphertext needs no doctrinal alignment.
+
 DNS resolution itself is handled separately via the hidden-primary + Hurricane Electric pattern in §5.7/§6.13, which already solves the DNS-specific instance of this problem independent of the mail/web/git layers above.
 
 ### 6.12 Shared-provider IP reputation
