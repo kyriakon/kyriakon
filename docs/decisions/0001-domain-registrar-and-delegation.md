@@ -4,6 +4,8 @@ Status: accepted
 Date: 2026-09-11
 Amended: 2026-09-22, extended to cover `kyriakon.com`, with the consolidation marked provisional
 pending `kyriakon-infra` issue #70
+Amended: 2026-09-22, registrar re-assessment after #70 concluded: registry lock state, the non-EU
+registrar constraint, and registrar concentration
 
 ## Context
 
@@ -107,6 +109,30 @@ or the transfer does, and that should be confirmed rather than assumed.
 
 Neither lock is what actually keeps a defensive domain. Auto-renew against a reachable registrant
 contact is, and `kyriakon.com` expires two years before `kyriakon.net` does.
+
+## Amendment, registrar re-assessment (2026-09-22)
+
+`kyriakon-infra` issue #70 has concluded, and it settles the provisional paragraph above in favour of staying: both gTLDs remain at Porkbun, and jurisdiction diversity is bought with a separate ccTLD rather than by moving either of them (ADR 0006). Three things the original record did not cover were assessed.
+
+### The registry lock is in place on neither domain
+
+Neither domain is registry-locked. Verisign's criterion is that all three of Update, Delete and Transfer carry a `server...Prohibited` status, and `kyriakon.net` carries `client delete prohibited` and `client transfer prohibited`, which are registrar-level and therefore a different guarantee. `kyriakon.com` carries `client transfer prohibited` alone, so it is weaker on the status that matters most for a defensive registration, which is accidental deletion.
+
+Applying the lock is a registry action mediated by the registrar, and lifting it runs the same way in reverse: out-of-band verification with the registrant, with Dynadot quoting three to five business days in each direction. That asymmetry decides the order. Lock `kyriakon.net`, which is settled and is not moving. Do not lock `kyriakon.com` before its transfer, because a lock that must be lifted inside the transfer window turns a routine move into a support round trip against a deadline.
+
+### A second registrar is required, and it has to be Swiss
+
+Issue #70 requires the ccTLD to sit outside the European Union, and `.ch` is the chosen name. SWITCH accredits its registrars, and every non-EU registrar on that list is Swiss, so the second registrar will be a Swiss one. Porkbun cannot register `.ch` at all, which was checked against its own public pricing endpoint: 909 TLDs, `.ch` not among them. The candidates are INWX, if the contracting entity is the Zürich one rather than the `inwx.de` presence or the "INWX Inc." the site also names, and Infomaniak in Geneva. Both need confirming as permitting arbitrary external nameservers, because the delegation has to reach HE.
+
+That supersedes the earlier framing of INWX as the EU-jurisdiction alternative. For this decision the property that matters is its Swiss presence, and which entity contracts is the thing to confirm rather than assume, since a United States corporation would defeat the purpose entirely.
+
+### Concentration
+
+Two names at one American registrar concentrate both on the same legal process, and that concentration is jurisdictional rather than corporate. Moving a gTLD to a second American registrar would spread the account risk and leave the jurisdictional exposure exactly as it was, so the answer is the ccTLD at a Swiss registrar rather than a shuffle among gTLDs.
+
+### Still open
+
+Whether Dynadot adds `client delete prohibited` to `kyriakon.com`, or the transfer to Porkbun does. It is the status whose absence matters most for the one domain whose only purpose is that nobody else can use the name, as the Consequences above already note.
 
 ## References
 
