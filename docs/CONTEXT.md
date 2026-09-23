@@ -72,6 +72,18 @@ holds his own mail private key, which makes it the only machine where message co
 processed. See ADR 0002.
 _Avoid_: client (already means the PGP-capable mail application), personal machine, laptop
 
+**Custodian**:
+A body, not an individual, that holds a copy of the platform's encrypted repository and a
+snapshot, and never a key and never live mail. Chosen for continuity and for a proven ability to
+act, so an archdiocese or a monastery with a stable connection rather than a parish council.
+_Avoid_: data escrow, backup host, mirror, federation
+
+**Secondary site**:
+The machine a restored copy runs on after the primary is lost, created from the snapshot and the
+custodian's copy rather than standing. Distinct from the primary, which is the mail box, and from
+the offline SSD copy, which sits with the operator.
+_Avoid_: failover, standby, replica, node, federation
+
 **Triage model**:
 The local model on the operator host that sorts inbound mail and account applications into
 folders and priority. It sorts only: it never sends, deletes, or approves anything.
