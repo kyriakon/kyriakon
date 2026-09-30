@@ -103,3 +103,35 @@ does not answer it and jurisdiction diversity is what does. Physical coercion of
 out of scope for both classes.
 _Avoid_: state actor (ambiguous, see "reading adversary"), surveillance (that is the reading case),
 censorship (names the mechanism, not the actor)
+
+**Prepaid rail**:
+Any payment that does not pass through the card processor: cash by post, cash in hand, or a Monero
+subaddress. Credited by the operator, tagged with the rail it arrived on, so the processor is one of
+several ways to extend a date rather than the system of record (ADR 0008).
+_Avoid_: offline payment, manual payment (names the mechanism, not the rail), crypto (one of the three)
+
+**Paid-until date**:
+The authoritative expiry of a member's access, held on the platform's own machine. A successful
+payment extends it; a processor event only reports that a card payment succeeded, and a subscription
+in arrears never shortens a date the member has already paid for.
+_Avoid_: renewal date, expiry date (ambiguous — both the member's access and the processor's
+subscription have one)
+
+**Lapsed**:
+The account state after a payment deadline passes without renewal. Mail still arrives and stays
+readable, and everything already published stays up, while sending, uploading and git pushes stop.
+A bounded grace window follows, and it ends in deletion, so the state is not an indefinite free tier.
+_Avoid_: read-only (the proposal's older name, which promised less access than the state gives),
+expired, suspended
+
+**Suspended**:
+The account state during enforcement under the acceptable use policy. Outbound mail stops at once and
+the published site and capsule go dark, while inbound mail keeps being accepted and the member can
+still reach the account page to see the reason and respond.
+_Avoid_: locked, banned, deactivated
+
+**Closing**:
+The seven-day window between a member requesting deletion, or being refunded, and the deletion
+running. The account works normally throughout, delivery continues, and the closure can be cancelled
+from the account page.
+_Avoid_: pending deletion, cancellation (that term belongs to the consumer's statutory right)
