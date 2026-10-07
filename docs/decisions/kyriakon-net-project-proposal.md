@@ -18,7 +18,7 @@ Kyriakon.net is the natural hosting-side counterpart to **Kleio** (a separate, s
 
 **Narrow surface, not shell access.** Every capability maps to one base-system OpenBSD daemon operating in a restricted mode (`httpd`, `sftp` via `sshd internal-sftp` chroot, `git-shell`, `gmid`). No general-purpose shell for standard accounts. This is the single decision that keeps support burden, resource contention, and moderation load bounded as the user base grows.
 - **Audit us, don't trust us.** All non-secret infrastructure configuration — `pf.conf`, `httpd.conf`, `smtpd.conf`, Dovecot config, `sshd_config`, `gmid.conf`, provisioning scripts — is public on GitHub from day one. A `threat-model.md` states plainly what the platform protects against and what it doesn't, and what the admin can and cannot see.
-- **Accessible, not extractive.** Pricing is set at real break-even plus a small buffer, not tiered to maximise revenue. £30–150/yr tiers were explicitly considered and rejected as inconsistent with the mission.
+- **Accessible, not extractive.** Pricing is set at real break-even plus a small buffer, not tiered to maximise revenue. The higher tiers exist because they cost more to run rather than because they can bear more: £20/yr for one account, £40/yr for a domain attached to a body, and £150/yr for a managed instance, each recovered from its own cost (`kyriakon-infra` #188).
 - **Genuinely open to non-Orthodox applicants**, while being built by and primarily for the Orthodox community, distributed through parish/diocese trust networks rather than paid acquisition. Openness is not automatic admission: a person reads every application and decides, a monastic needs the elder's blessing, and a decline gives no reason (§5.9.1; `kyriakon-infra` #159).
 - **Filesystem-native storage over databases wherever the workload allows it** — Maildir over a mail database, plain git repos over an application-layer store — because it's simpler to reason about, trivially backed up by walking the files, and has no separate engine to operate or lose data in.
 **Mail is zero-access: the platform cannot read it.** Maildirs store only ciphertext the platform holds no key to decrypt — the server holds each user's *public* key and encrypts every message on ingress (delivery and IMAP APPEND), so a disclosure order yields ciphertext and no key. This protects message *content* (subject, body, headers); it does *not* protect correspondence metadata (sender/recipient, timestamps, sizes), which the envelope and SMTP logs reveal — and it does *not* stop a compelled admin from intercepting *future* mail as it relays in plaintext (the "determined state actor" ceiling in §5.6). Full-disk `softraid` + encrypted backup (§5.5) remain as a second, weaker layer against disk/backup walkaway.
@@ -335,7 +335,7 @@ Distinct from the general "first bespoke internet-facing service" point already 
 - Acceptable use policy and a minimal privacy policy sufficient to onboard real users under GDPR
 - Account deletion: `scripts/del-user.sh` with the 40-day grace, automated at the end of every window (§5.9; `kyriakon-infra` #153); GDPR erasure is not deferrable past onboarding real users
 - Public `kyriakon-infra` repo with the structure in §5.6, published in parallel with the build rather than after
-- Individual pricing tier only: flat £20/yr
+- Pricing: £20/yr for an individual account, £40/yr for a body's own domain, and £150/yr for a managed instance, which is ordered by hand (`kyriakon-infra` #188)
 - kyriakon-site content promotes Kleio as the recommended password manager for `pass` repos hosted here (§3) — a copy/content requirement, not a technical one
 
 **In scope (resolved):**
@@ -346,13 +346,12 @@ Distinct from the general "first bespoke internet-facing service" point already 
 
 **Deferred past MVP:**
 - CGI support (`slowcgi`) — real feature demand should exist before taking on its resource-limiting and sandboxing burden
-- Own-domain tier (~£50/yr, for parishes/businesses wanting `secretary@theirparish.org`) — same shared infrastructure, isolated mailboxes; straightforward to add once the individual tier is proven, not before
-- Fully separate managed-VPS tier (~£150+/yr) — explicitly a later/premium option, not part of early build
+- ~~Own-domain tier (~£50/yr)~~ and ~~fully separate managed-VPS tier (~£150+/yr)~~ — resolved: both are sold, the first at £40/yr with its provisioning automated before the release and the second at £150/yr by enquiry, listed on the site with a contact address rather than built (`kyriakon-infra` #188, #190)
 - Any reconsideration of shell access (§6.7)
 - Warm-standby VPS (§6.11, layer 4) — cost-gated; worth having before the platform becomes critical infrastructure for a parish (§6.6). Secondary MX (layer 3) is deferred until userbase economics cover it (§6.11).
 - Acting as DNS host for parish-owned domains (§6.13) — MVP own-domain tier requires only documented DNS-record instructions, not zone hosting
 
-**Rationale**: this scope proves the two things that actually determine whether kyriakon.net is viable — that mail can be run reliably and trustworthily on a self-managed OpenBSD box, and that the no-shell service set (static/Gemini/git) is enough to be genuinely useful — without taking on CGI's sandboxing burden or multiple pricing tiers before there's a single tier's worth of real users to learn from.
+**Rationale**: this scope proves the two things that actually determine whether kyriakon.net is viable — that mail can be run reliably and trustworthily on a self-managed OpenBSD box, and that the no-shell service set (static/Gemini/git) is enough to be genuinely useful — without taking on CGI's sandboxing burden, and with the tier set held to what each tier's own cost supports (§2).
 
 ## 8. Team & Working Model
 
