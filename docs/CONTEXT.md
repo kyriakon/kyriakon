@@ -9,7 +9,7 @@ outside one repo) live in that repo's own `CONTEXT.md` instead — e.g.
 
 **Shell-less user**:
 The standard account tier across the whole platform. No interactive shell. Mail via
-IMAP/SMTP, static/Gemini site hosting via `sftp` upload, `pass` git repos via
+IMAP/SMTP, static/gemini site hosting via `sftp` upload, `pass` git repos via
 `git-shell`. This is the platform's core safety property — it's what keeps support
 burden, resource contention, and moderation load bounded without needing pubnix-style
 shell moderation tooling.
@@ -21,15 +21,17 @@ generous default quotas.
 _Avoid_: standard tier, base tier
 
 **Own-domain tier**:
-Deferred-past-MVP pricing tier (~£50/yr) for parishes/businesses wanting
+A pricing tier at £40/yr for parishes, monasteries and small businesses wanting
 `secretary@theirparish.org` on their own domain — same shared infrastructure and
-isolated mailboxes as the individual tier, just domain-attached. Does not include
+isolated mailboxes as the individual tier, up to ten addresses, sold from the release with
+its provisioning automated before it (`kyriakon-infra` #188, #190). Does not include
 kyriakon.net hosting the parish's DNS zone — see the project proposal, §6.13.
 _Avoid_: custom domain tier, parish tier
 
 **Managed instance tier**:
-Deferred/premium pricing tier (~£150+/yr) offering a fully separate VPS rather than
-shared infrastructure. Not part of early build.
+A pricing tier at £150/yr, listed on the site with its price and ordered by hand rather
+than built for the early release: a fully separate VPS rather than shared infrastructure
+(`kyriakon-infra` #188).
 _Avoid_: dedicated tier, enterprise tier
 
 **Dogfooding**:
