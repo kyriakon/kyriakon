@@ -346,7 +346,7 @@ Distinct from the general "first bespoke internet-facing service" point already 
 
 **Deferred past MVP:**
 - CGI support (`slowcgi`) — real feature demand should exist before taking on its resource-limiting and sandboxing burden
-- ~~Own-domain tier (~£50/yr)~~ and ~~fully separate managed-VPS tier (~~£150+/yr)~~ — resolved: both are sold, the first at £40/yr with its provisioning automated before the release and the second at £150/yr by enquiry, listed on the site with a contact address rather than built (`kyriakon-infra` #188, #190)
+- ~~Own-domain tier (~£50/yr)~~ and ~~fully separate managed-VPS tier (~£150+/yr)~~ — resolved: both are sold, the first at £40/yr with its provisioning automated before the release and the second at £150/yr by enquiry, listed on the site with a contact address rather than built (`kyriakon-infra` #188, #190)
 - Any reconsideration of shell access (§6.7)
 - Warm-standby VPS (§6.11, layer 4) — cost-gated; worth having before the platform becomes critical infrastructure for a parish (§6.6). Secondary MX (layer 3) is deferred until userbase economics cover it (§6.11).
 - Acting as DNS host for parish-owned domains (§6.13) — MVP own-domain tier requires only documented DNS-record instructions, not zone hosting
