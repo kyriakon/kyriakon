@@ -11,11 +11,9 @@ consistent.
 ## Projects
 
 - [`kyriakon-infra`](https://github.com/kyriakon/kyriakon-infra) - Terraform + OpenBSD
-  configuration for the platform itself
+  configuration for the platform, and the onboarding service in its `onboard/` crate
+  (project proposal, §5.9)
 - `kyriakon-site` - the static kyriakon.net marketing/landing site
-- `kyriakon-onboard` - the SSH TUI signup/login service and Stripe-webhook receiver
-  (project proposal, §5.9); the first bespoke, internet-facing service, so it carries
-  stricter agent guardrails than the others
 - [Kleio](https://github.com/kyriakon/kleio) - the pass-compatible password manager we
   recommend for communal security; independently scoped, but kyriakon.net is a
   first-class provider in Kleio's "add a remote" flow (project proposal, §3)
